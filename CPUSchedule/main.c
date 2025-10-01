@@ -4,7 +4,6 @@
 #include "process.h"
 #include "scheduler.h"
 
-
 void read_input(const char *filename, Process *processes, int *num_processes, int *rr_quantum, int *mlfq_quantum, int *mlfq_s_value) {
     FILE *file = fopen(filename, "r");
     if (!file) {
