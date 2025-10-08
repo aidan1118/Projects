@@ -381,29 +381,57 @@ class InteractiveCBB:
             team_name = trend.get('Team', 'Unknown')
             print(f"🏀 Team: {team_name}")
             
-            # Show upcoming game
+            # Show data source info
+            data_source = trend.get('_data_source', 'unknown')
+            if data_source == 'betting_trends':
+                print("⚠️  Using betting data (stats unavailable)")
+            elif data_source in ['games_data', 'season_statistics', 'game_statistics']:
+                print("✅ Using actual game statistics")
+            
+            # Show upcoming game if available
             if 'UpcomingGame' in trend:
                 upcoming = trend.get('UpcomingGame', {})
                 home_team = upcoming.get('HomeTeam', 'TBD')
                 away_team = upcoming.get('AwayTeam', 'TBD')
                 print(f"🆚 Next Game: {away_team} @ {home_team}")
+            
+            # Show recent trends - always check for TeamGameTrends
+            team_trends = trend.get('TeamGameTrends', [])
+            if team_trends:
+                print(f"\n📈 Recent Performance:")
+                print("-" * 40)
                 
-                # Show recent trends
-                team_trends = trend.get('TeamGameTrends', [])
-                if team_trends:
-                    print(f"\n📈 Recent Performance:")
-                    print("-" * 40)
+                for game_trend in team_trends[:8]:  # Show top 8 trends
+                    scope = game_trend.get('Scope', 'Unknown')
+                    games = game_trend.get('Games', 0)
+                    wins = game_trend.get('Wins', 0)
+                    losses = game_trend.get('Losses', 0)
+                    avg_score = game_trend.get('AverageScore', 0)
+                    avg_opp_score = game_trend.get('AverageOpponentScore', 0)
                     
-                    for game_trend in team_trends[:8]:  # Show top 8 trends
-                        scope = game_trend.get('Scope', 'Unknown')
-                        games = game_trend.get('Games', 0)
-                        wins = game_trend.get('Wins', 0)
-                        losses = games - wins if isinstance(games, int) and isinstance(wins, int) else 'N/A'
-                        avg_score = game_trend.get('AverageScore', 0)
-                        
-                        print(f"  {scope:<25}: {wins}-{losses} (avg: {avg_score:.1f})")
-                else:
-                    print("📊 No detailed trends available")
+                    print(f"  {scope:<25}: {wins}-{losses} (avg: {avg_score:.1f}, opp: {avg_opp_score:.1f})")
+            else:
+                print("📊 No detailed trends available")
+            
+            # Show detailed statistics if available
+            detailed_stats = trend.get('DetailedStats', {})
+            if detailed_stats:
+                print(f"\n📊 Detailed Statistics:")
+                print("-" * 40)
+                
+                # Shooting stats
+                shooting = detailed_stats.get('Shooting', {})
+                if shooting:
+                    print("🎯 Shooting:")
+                    for stat_name, stat_value in shooting.items():
+                        print(f"  {stat_name:<15}: {stat_value}")
+                
+                # Per game stats
+                per_game = detailed_stats.get('PerGame', {})
+                if per_game:
+                    print("\n📈 Per Game Averages:")
+                    for stat_name, stat_value in per_game.items():
+                        print(f"  {stat_name:<12}: {stat_value}")
         
         print(f"\n💾 Full data saved to data/ directory")
     

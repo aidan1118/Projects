@@ -45,3 +45,5 @@
 2025-10-07 12:34:01,645 - api_client - INFO - Making API request to: https://api.sportsdata.io/v3/cbb/scores/json/TeamsBasic
 2025-10-07 12:34:01,809 - root - INFO - Data saved to CSV: data/teams_info.csv
 2025-10-07 12:34:01,809 - data_processor - INFO - Loaded 1314 teams
+2025-10-07 20:46:20,804 - api_client - ERROR - HTTP error occurred: 404 Client Error:  for url: https://api.sportsdata.io/v3/cbb/stats/json/TeamGameStats/2024?key=eb4f92ef4ea547c0a98460f9d34237df
+2025-10-07 20:46:20,805 - data_processor - WARNING - Failed to get game stats for DUKE: HTTP 404: { "statusCode": 404, "message": "Resource not found" }

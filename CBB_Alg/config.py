@@ -8,10 +8,11 @@ class Config:
     
     # API Configuration
     SPORTSDATA_API_KEY = os.getenv('SPORTSDATA_API_KEY')
+    SPORTSDATA_STATS_API_KEY = os.getenv('SPORTSDATA_STATS_API_KEY')
     SPORTSDATA_BASE_URL = os.getenv('SPORTSDATA_BASE_URL', 'https://api.sportsdata.io/v3/cbb')
     
     # Default settings
-    DEFAULT_SEASON = os.getenv('DEFAULT_SEASON', '2024')
+    DEFAULT_SEASON = os.getenv('DEFAULT_SEASON', '2025')
     DEFAULT_SEASON_TYPE = os.getenv('DEFAULT_SEASON_TYPE', 'REG')
     
     # Data directories
@@ -24,7 +25,10 @@ class Config:
         'team_trends': '/odds/json/TeamTrends/{team}',
         'matchup_trends': '/odds/json/MatchupTrends/{team}/{opponent}',
         'games': '/scores/json/Games/{season}',
-        'player_stats': '/stats/json/PlayerSeasonStats/{season}'
+        'player_stats': '/stats/json/PlayerSeasonStats/{season}',
+        'team_stats': '/stats/json/TeamSeasonStats/{season}',
+        'team_game_stats': '/stats/json/TeamGameStats/{season}',
+        'game_results': '/scores/json/GamesByDate/{date}'
     }
     
     @classmethod
