@@ -12,19 +12,22 @@ class SportsDataAPIClient:
     def __init__(self):
         Config.validate_config()
         self.api_key = Config.SPORTSDATA_API_KEY
+        self.stats_api_key = Config.SPORTSDATA_STATS_API_KEY
         self.base_url = Config.SPORTSDATA_BASE_URL
         self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'CBB-Prediction-System/1.0'
         })
     
-    def _make_request(self, url: str, params: Optional[Dict] = None) -> Dict[Any, Any]:
+    def _make_request(self, url: str, params: Optional[Dict] = None, use_stats_key: bool = False) -> Dict[Any, Any]:
         """Make a request to the API with error handling"""
         try:
             # Add API key as URL parameter (SportsData.io uses this method)
             if params is None:
                 params = {}
-            params['key'] = self.api_key
+            # Use stats API key for statistical endpoints, regular key for others
+            api_key = self.stats_api_key if use_stats_key and self.stats_api_key else self.api_key
+            params['key'] = api_key
             
             logger.info(f"Making API request to: {url}")
             response = self.session.get(url, params=params, timeout=30)
@@ -72,11 +75,30 @@ class SportsDataAPIClient:
         if season is None:
             season = Config.DEFAULT_SEASON
         url = Config.get_endpoint_url('games', season=season)
-        return self._make_request(url)
+        return self._make_request(url, use_stats_key=True)
     
     def get_player_stats(self, season: str = None) -> Dict[Any, Any]:
         """Get player statistics for a season"""
         if season is None:
             season = Config.DEFAULT_SEASON
         url = Config.get_endpoint_url('player_stats', season=season)
+        return self._make_request(url, use_stats_key=True)
+    
+    def get_team_stats(self, season: str = None) -> Dict[Any, Any]:
+        """Get team season statistics"""
+        if season is None:
+            season = Config.DEFAULT_SEASON
+        url = Config.get_endpoint_url('team_stats', season=season)
+        return self._make_request(url, use_stats_key=True)
+    
+    def get_team_game_stats(self, season: str = None) -> Dict[Any, Any]:
+        """Get team game-by-game statistics"""
+        if season is None:
+            season = Config.DEFAULT_SEASON
+        url = Config.get_endpoint_url('team_game_stats', season=season)
+        return self._make_request(url, use_stats_key=True)
+    
+    def get_game_results_by_date(self, date: str) -> Dict[Any, Any]:
+        """Get game results by date (YYYY-MM-DD format)"""
+        url = Config.get_endpoint_url('game_results', date=date)
         return self._make_request(url)
