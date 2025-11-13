@@ -47,19 +47,79 @@ import matplotlib.pyplot as plt
 import pandas as pd
 ```
 
+## Setup and Installation
+
+### Step 1: Check Your Environment
+First, verify you have Python 3.13+ installed:
+```bash
+python3 --version
+```
+
+### Step 2: Install Required Packages
+If you encounter import errors in VS Code, install the required packages:
+
+```bash
+# Option 1: Install to user directory
+pip3 install --user --break-system-packages tensorflow numpy matplotlib pandas
+
+# Option 2: If you have a virtual environment in your Projects directory
+source /path/to/your/.venv/bin/activate
+pip install tensorflow numpy matplotlib pandas
+```
+
+### Step 3: Configure VS Code Python Interpreter
+If you see import errors like "ModuleNotFoundError: No module named 'tensorflow'":
+
+1. **Open your notebook** (FNist.ipynb or MNist.ipynb)
+2. **Look at the top-right corner** - you'll see something like "Python 3.x.x" or ".venv (Python 3.x.x)"
+3. **Click on the Python version**
+4. **Select the correct interpreter**:
+   - If you installed with `--user`: Choose `/opt/homebrew/bin/python3` or `/usr/bin/python3`
+   - If you have a `.venv`: Choose the one that shows `.venv` or the path to your virtual environment
+
+### Step 4: Verify Installation
+Test that all packages work:
+```python
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+print("TensorFlow version:", tf.__version__)
+print("All packages imported successfully!")
+```
+
 ## Usage
 
-1. Open either notebook in Jupyter or Google Colab
-2. Run cells sequentially to:
+1. **Click "Run All"** at the top of the notebook, or run cells sequentially to:
    - Load and preprocess data
    - Build and train the model
    - Evaluate performance
    - Visualize results
 
-## Results
+## Troubleshooting
 
-- **MNIST CNN**: 98.61% test accuracy
-- **Fashion-MNIST Dense**: Results vary (training showed gradient explosion issues in later epochs)
+### Common Issues
+
+#### "ModuleNotFoundError" for tensorflow, numpy, or matplotlib
+- **Cause**: VS Code is using the wrong Python interpreter
+- **Solution**: Follow Step 3 above to set the correct Python interpreter
+
+#### VS Code shows ".venv (Python 3.x.x)" but packages are missing
+- **Cause**: Virtual environment exists but doesn't have required packages
+- **Solution**: Install packages in the virtual environment:
+  ```bash
+  source /path/to/.venv/bin/activate
+  pip install tensorflow numpy matplotlib pandas
+  ```
+
+#### TensorFlow import warnings about CPU optimizations
+- **Cause**: TensorFlow not compiled with specific CPU optimizations
+- **Impact**: None - just informational warnings, models will still train correctly
+
+#### Model training takes a long time
+- **Cause**: Neural networks are computationally intensive
+- **Solution**: 
+  - Reduce epochs or batch size for faster training
+  - Or let it run - both models should complete training reasonably quickly
 
 ## Features
 
