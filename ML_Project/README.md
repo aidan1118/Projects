@@ -82,14 +82,78 @@ from sklearn.svm import SVR
 from sklearn.metrics import r2_score
 ```
 
+## Setup and Installation
+
+### Step 1: Check Your Environment
+First, verify you have Python 3.13+ installed:
+```bash
+python3 --version
+```
+
+### Step 2: Install Required Packages
+If you encounter import errors in VS Code, install the required packages:
+
+```bash
+# Option 1: Install to user directory (recommended)
+pip3 install --user --break-system-packages pandas numpy scikit-learn matplotlib jupyter
+
+# Option 2: If you have a virtual environment in your Projects directory
+source /path/to/your/.venv/bin/activate
+pip install pandas numpy scikit-learn matplotlib jupyter
+```
+
+### Step 3: Configure VS Code Python Interpreter
+If you see import errors like "ModuleNotFoundError: No module named 'pandas'":
+
+1. **Open your notebook** (`a3.ipynb`)
+2. **Look at the top-right corner** - you'll see something like "Python 3.x.x" or ".venv (Python 3.x.x)"
+3. **Click on the Python version**
+4. **Select the correct interpreter**:
+   - If you installed with `--user`: Choose `/opt/homebrew/bin/python3` or `/usr/bin/python3`
+   - If you have a `.venv`: Choose the one that shows `.venv` or the path to your virtual environment
+
+### Step 4: Verify Installation
+Test that all packages work:
+```python
+import pandas as pd
+import numpy as np
+import sklearn
+import matplotlib.pyplot as plt
+print("All packages imported successfully!")
+```
+
 ## Usage
 
-1. Load the dataset: `pd.read_csv('retail_store_inventory.csv')`
-2. Follow the notebook cells sequentially for:
+1. **Load the dataset**: `pd.read_csv('retail_store_inventory.csv')`
+2. **Click "Run All"** at the top of the notebook, or follow cells sequentially for:
    - Data exploration and visualization
    - Feature preprocessing and transformation
    - Model training and evaluation
    - Performance comparison
+
+## Troubleshooting
+
+### Common Issues
+
+#### "ModuleNotFoundError" for pandas, numpy, sklearn, or matplotlib
+- **Cause**: VS Code is using the wrong Python interpreter
+- **Solution**: Follow Step 3 above to set the correct Python interpreter
+
+#### VS Code shows ".venv (Python 3.x.x)" but packages are missing
+- **Cause**: Virtual environment exists but doesn't have required packages
+- **Solution**: Install packages in the virtual environment:
+  ```bash
+  source /path/to/.venv/bin/activate
+  pip install pandas numpy scikit-learn matplotlib jupyter
+  ```
+
+#### SVR cross-validation takes too long or gets stuck
+- **Cause**: SVR is computationally intensive on large datasets (73K+ records)
+- **Solution**: Either wait for completion or interrupt the cell and continue with remaining cells
+
+#### Import warnings in VS Code (yellow underlines)
+- **Cause**: VS Code's linter being overly cautious
+- **Impact**: None - these are just warnings, the code will still run correctly
 
 ## Future Improvements
 
