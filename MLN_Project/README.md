@@ -121,11 +121,6 @@ print("All packages imported successfully!")
   - Reduce epochs or batch size for faster training
   - Or let it run - both models should complete training reasonably quickly
 
-## Results
-
-- **MNIST CNN**: 98.61% test accuracy
-- **Fashion-MNIST Dense**: Results vary (training showed gradient explosion issues in later epochs)
-
 ## Features
 
 - Data visualization and exploration
