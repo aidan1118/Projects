@@ -1,0 +1,8 @@
+Flask>=3.0.0
+Flask-CORS>=4.0.0
+pandas>=2.2.0
+nfl-data-py>=0.3.0
+gunicorn>=21.2.0
+requests>=2.32.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
